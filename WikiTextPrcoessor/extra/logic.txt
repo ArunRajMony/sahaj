@@ -1,0 +1,37 @@
+1. find sentences, and put in a sorted map M1, where key is sentence # and value is the corresponding sentence. 
+2. for each sentence
+2.1. get the tokens
+2.2. get the POS tags
+2.3  get the lemmas.
+2.4  post-process the lemmas for handling "O"s
+2.5  form the lemma sentence
+2.6  put the lemma sentence in a map M2 where key is the sentence # and the value is the corresponding lemma sentence
+3. for each question
+3.1 find the lemma sentence equivalent of the question sentence
+3.2 in a loop do the following until the end condition is satisfied
+3.2.0 set k, where k is (length - 1 , where length is the number of words in the question)
+3.2.1 set a substring word group length to k, 
+3.2.2 in a while loop until distinct sub-strings of length k is found or match is found
+3.2.2.1 using regex, try and match the current sub-string group with each value in the map M1
+3.2.2.2 if match found then take that value from M1 and set to S1 and go to 4
+3.2.2.3 if not matching found, then form the next substring and repeat 3.2.2
+3.2.3 if no match found, reduce k by 1 and repeat 3.2.1
+3.2 if no match found still then ????
+4. get the left-over answers from the answer map and for each answer
+4.1 do a regex match with S1 
+4.2 if match , then declare that as the answer for the question and repeat from step 3 for next question. 
+5. end. 
+
+
+utils 
+-- forming lemma sentences
+-- forming substrings 
+-- regex match  
+
+
+
+new logic
+-- nearness to the adjective/adverb gets a higher score , but adjective's index position in the sentence should be before the starting index of the answer's text. 
+-- nearness to the verbs get a less weightage score, but a score for sure
+-- each answer is  
+

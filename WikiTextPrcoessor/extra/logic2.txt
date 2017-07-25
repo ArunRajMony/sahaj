@@ -1,0 +1,128 @@
+logic 
+
+
+1. for each question
+1.1. identify the adjectives , adverbs and verbs
+1.2  score each of the sentences based on whether they have the exact adjective /  adverb and verbs . adjectives have more weight than the adverbs and verbs.  
+1.2  get the sentence which gets the maximum score. if there is a conflict, resolve it by the "substring" matching mechanism. lets call this sentence as S1. 
+1.3  indentify those answer(s) from the "available" answers list, which are a substring of the string S1. (i.e part of that sentence). lets call this as A[]
+1.4  if A[] has more then one answer, then got to 1.4.1 else go to 1.4.2 
+1.4.1 conflict has to be resolved using nearest-to-word-pattern weightage mechanism for the adjectives , adverbs and verbs. 
+1.4.2 if A[] has only one answer then, use that as the match and process the next question. IF A[] is empty then go to 1.4.3
+1.4.3 use the substring matching mechanism to find a match.  
+
+
+
+#########################################################################################################
+
+Sentence 1 --> Thomas Alva Edison (February 11, 1847 – October 18, 1931) was an American inventor and businessman, who has been described as America's greatest inventor. 
+
+Sentence 2 --> He developed many devices that greatly influenced life around the world, including the phonograph, the motion picture camera, and the long
+-lasting, practical electric light bulb. 
+
+Sentence 3 --> Dubbed "The Wizard of Menlo Park", he was one of the first inventors to apply the principles of mass production and large-scale teamwork to the process of invention, and because of that, he is often credited with the creation of the first industrial research laboratory. 
+
+
+
+logic
+
+a1.practical electric light bulb;
+a2.Dubbed "The Wizard of Menlo Park";
+a3.he is often credited with the creation of the first industrial research laboratory;
+a4.the phonograph, the motion picture camera, and the long-lasting, practical electric light bulb;
+a5.Thomas Alva Edison;
+
+************************************************************************************************************************************
+Q1. Who is described as America's greatest inventor?
+is -VBZ : be
+described -VBN : describe
+
+"describe" is there only in sentence 1, so its the only match. 
+Among the answers only "a5" comes from sentence 1, so "a5" is the match for "Q1".
+
+************************************************************************************************************************************
+
+Q2. Which devices developed by Edison greatly influenced life around the world?
+developed -VBN : develop
+greatly -RB : greatly
+influenced -VBD : influence
+
+weightage score to be calculated as there is a tie btw 1 and 4 as both 1 and 4 are from the same sentence which has been identified as a match. 
+whats the starting and end index for each of the conflicting answers ? 
+a1 - 22 (a1s) (start index) ; 25 (end index) (a1e)
+a4 - 13 (a4s) (startd index) ; 25 (end-index) (a4e)
+
+adjective and adverbs 
+---------------------
+"greatly" - index is 6 (q1s) . 
+scoreForA1 = (a1s - q1s)*w1 =  (22-6)*w1 = 16*w1
+scoreForA4 = (a4s - q1s)*w1 =  (13-6)*w1 = 7*w1
+
+verbs
+-----
+developed - index is 2 (q2s)
+scoreForA1 = (a1s - q2s)*w2 =  (22-2)*w1 = 20*w2
+scoreForA4 = (a4s - q2s)*w2 =  (13-2)*w1 = 11*w2
+
+influenced - index is 7 (q3s)
+scoreForA1 = (a1s - q3s)*w2 =  (22-7)*w1 = 15*w2
+scoreForA4 = (a4s - q3s)*w2 =  (13-7)*w1 = 6*w2
+
+overall  "scoreForA4" is much lesser than "scoreForA1" , so "a4" is deemeed as a better match
+
+************************************************************************************************************************************
+
+Q3: What is Edison often credited with?
+often -RB : often
+credited -VBD : credit
+
+Sentence 3 is the match 
+But There is a conflict btw answers a2 and a3
+weightage score to be calculated as there is a tie btw 2 and 3 as both 2 and 3 are from the same sentence which has been identified as a match. 
+whats the starting and end index for each of the conflicting answers ? 
+a2 - 1 (a2s) (start index) ; 6 (end index) (a2e)
+a3 - 32 (a3s) (startd index) ; 45 (end-index) (a3e)
+
+adjective and adverbs 
+---------------------
+"often"  - index is 34 (q1s)
+scoreForA2 = (a2s - q1s)*w1 =  (1-34)*w1 = -33*w1
+scoreForA3 = (a3s - q1s)*w1 =  (32-34)*w1 = -2*w1
+
+verbs
+------
+credited  - index is 35 (q2s)
+scoreForA2 = (a2s - q2s)*w1 =  (1-35)*w1 = -34*w1
+scoreForA3 = (a3s - q2s)*w1 =  (32-35)*w1 = -3*w1
+
+
+overall  "scoreForA3" is much lesser than "scoreForA2" , so "A3" is deemeed as a better match
+
+************************************************************************************************************************************
+
+Q4. What was the long-lasting thing which Edison developed?
+long-lasting -JJ : long-lasting
+developed -VBD : develop
+
+
+Sentence 2 is the match as only that has both the two words (adjective / adverb) listed 
+
+both a1 and a4 are from sentence 2. 
+but a4 is already matched to Q2, so only a1 is available for match and hence no conflict. So A1 is the best match for Q4. 
+
+************************************************************************************************************************************
+
+Q5. What was Edison dubbed as?
+dubbed -VBD : dub
+
+Sentence 3 is the only match. 
+but both a2 and a3 are from sentence 2. 
+but a3 is already matched to Q3, so only a1 is available for match and hence no conflict. So A2 is the best match for Q5. 
+
+************************************************************************************************************************************
+
+
+
+
+
+

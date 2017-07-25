@@ -1,0 +1,1 @@
+   This application uses Apache Open NLP library for the purpose of comparing texts and finding the relevance amongst sentences to arrive at the best match between questions and answers.

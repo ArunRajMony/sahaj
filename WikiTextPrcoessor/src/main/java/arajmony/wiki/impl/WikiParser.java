@@ -104,7 +104,7 @@ public class WikiParser {
 		for(int q=0; q < m_questions.length ; q++){
 			
 			log.debug(String.format("question # %d : %s ",q, m_questions[q]));
-			log.info(m_questions[q]);
+			log.debug(m_questions[q]);
 			
 			if(q != (WikiProcessConstants.NUM_OF_QUESTION_ANSWERS - 1)){
 			
@@ -124,7 +124,7 @@ public class WikiParser {
 				matchedAnswers[q]  = m_matchingRelatedInfo.getAnswersPendingMatch().get(0);//for last question just use the only one pending unmatched answer
 			}
 			
-			log.info(matchedAnswers[q]);
+			log.debug(matchedAnswers[q]);
 			log.debug("\n");
 			
 		}
